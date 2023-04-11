@@ -28,7 +28,7 @@ public class Authentication {
 
     /** 従業員テーブルのID */
     @OneToOne
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name = "employee_id", referencedColumnName="id", nullable = false)
     private Employee employee;
 
 }
