@@ -13,8 +13,11 @@ public class EmployeeService {
         this.employeeRepository = repository;
     }
 
-    public List<Employee> findAllActiveEmployees(){
-        return employeeRepository.findByDeleteFlagFalse();
+    public List<Employee> getEmployeeList(){
+        return employeeRepository.findAll();
+    }
+    public long countAllEmployees() {
+        return employeeRepository.count();
     }
 
 }
