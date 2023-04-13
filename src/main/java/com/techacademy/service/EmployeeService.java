@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.techacademy.entity.Employee;
 import com.techacademy.repository.EmployeeRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmployeeService {
@@ -18,6 +19,11 @@ public class EmployeeService {
     }
     public long countAllEmployees() {
         return employeeRepository.count();
+    }
+
+    @Transactional
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
 }
