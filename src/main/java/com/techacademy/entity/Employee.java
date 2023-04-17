@@ -1,11 +1,14 @@
 package com.techacademy.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.Data;
 
 @Data
@@ -34,5 +37,7 @@ public class Employee {
     @Column(name = "updated_at", nullable = false)
     private String updatedAt;
 
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Authentication authentication;
 
 }

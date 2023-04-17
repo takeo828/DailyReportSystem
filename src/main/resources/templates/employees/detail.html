@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+    <title>DailyReportSystem</title>
+    <link rel="stylesheet" th:href="@{/css/employees/detail.css}">
+</head>
+<body>
+    <h1>の従業員情報 詳細ページ</h1>
+    <form method="post" th:action="@{/emploees/detail/{id}/(id=${employee.id})}" th:object="${employee}">
+    <label for="id">ID</label>
+        <input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}">
+    <table>
+        <tr>
+            <th>社員番号</th>
+
+        </tr>
+    </table>
+    </form>
+</body>
+</html>

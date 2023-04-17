@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -19,15 +20,15 @@ public class EmployeeController {
         this.service = service;
     }
 
-@GetMapping
-public String getList(Model model) {
-    model.addAttribute("employeelist", service.getEmployeeList());
+    @GetMapping
+    public String getList(Model model) {
+        model.addAttribute("employeelist", service.getEmployeeList());
 
-    long totalEmployees = service.countAllEmployees();
-    model.addAttribute("totalEmployees", totalEmployees);
+        long totalEmployees = service.countAllEmployees();
+        model.addAttribute("totalEmployees", totalEmployees);
 
-    return "employees/list";
-}
+        return "employees/list";
+    }
 
     @GetMapping("/register")
     public String getRegister(@ModelAttribute Employee employee) {
@@ -39,4 +40,10 @@ public String getList(Model model) {
         service.saveEmployee(employee);
         return "redirect:/employees/list";
     }
+
+    @GetMapping("/detail/{id}/")
+    public String getEmployee(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("Employee", service.getEmployee(id));
+        return "/employee/detail";
     }
+}

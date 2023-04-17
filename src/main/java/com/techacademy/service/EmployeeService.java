@@ -17,6 +17,11 @@ public class EmployeeService {
     public List<Employee> getEmployeeList(){
         return employeeRepository.findAll();
     }
+
+    public Employee getEmployee(Integer id) {
+        return employeeRepository.findById(id).get();
+    }
+
     public long countAllEmployees() {
         return employeeRepository.count();
     }
