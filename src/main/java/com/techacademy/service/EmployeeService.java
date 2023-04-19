@@ -1,7 +1,9 @@
 package com.techacademy.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
+
 import com.techacademy.entity.Employee;
 import com.techacademy.repository.EmployeeRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,9 @@ public class EmployeeService {
 
     @Transactional
     public Employee saveEmployee(Employee employee) {
+        employee.setCreatedAt(LocalDateTime.now());
+        employee.setUpdatedAt(LocalDateTime.now());
+        employee.setDeleteFlag(0);
         return employeeRepository.save(employee);
     }
 

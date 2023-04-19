@@ -8,21 +8,28 @@
 <body>
     <h1>従業員 新規登録ページ</h1>
     <form method="post" th:action="@{/employees/register}" th:object="${employee}">
+        <p>
         <label for="code">社員番号</label>
         <br>
         <input type="text" th:field="*{authentication.code}">
-        <br>
+        </p>
+        <p>
         <label for="name">氏名</label>
         <br>
         <input type="text" th:field="*{name}">
-        <br>
+        </p>
+        <p>
         <label for="password">パスワード</label>
         <br>
         <input type="text" th:field="*{authentication.password}">
+        </p>
+        <p>
+        <label for="role">権限</label>
         <br>
-        <label for="authentication.role">権限</label>
-
-        <br>
+        <select th:field="*{authentication.role}">
+            <option th:each="item:${T(com.techacademy.entity.Authentication.Role).values()}" th:value="${item}" th:text="${item}">
+        </select>
+        </p>
         <input type="submit" value="投稿">
         <br>
         <a th:href="@{/employees}">一覧に戻る</a>

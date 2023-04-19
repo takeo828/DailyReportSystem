@@ -41,9 +41,11 @@ public class EmployeeController {
         return "redirect:/employees/list";
     }
 
-    @GetMapping("/detail/{id}/")
-    public String getEmployee(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("Employee", service.getEmployee(id));
-        return "/employee/detail";
+    @GetMapping(value = { "/detail", "/detail/{id}/" })
+    public String getEmployee(@PathVariable(name = "id", required = false) Integer id, Model model) {
+        Employee employee = id != null ? service.getEmployee(id) : new Employee();
+        model.addAttribute("employee", employee);
+        return "/employees/detail";
     }
+
 }

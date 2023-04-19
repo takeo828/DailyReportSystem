@@ -6,16 +6,22 @@
     <link rel="stylesheet" th:href="@{/css/employees/detail.css}">
 </head>
 <body>
+    <div class="title">
+    <h1>ID:</h1>
+    <h1 th:text="*{employee.id}"></h1>
     <h1>の従業員情報 詳細ページ</h1>
-    <form method="post" th:action="@{/emploees/detail/{id}/(id=${employee.id})}" th:object="${employee}">
-    <label for="id">ID</label>
-        <input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}">
-    <table>
-        <tr>
-            <th>社員番号</th>
-
-        </tr>
-    </table>
+    </div>
+    <form method="post" th:action="@{/employees/detail}">
+        <table th:object="${employee}">
+            <tr><th>社員番号</th><td th:text="*{authentication.code}"></td></tr>
+            <tr><th>名前</th><td th:text="*{name}"></td></tr>
+            <tr><th>権限</th><td th:text="*{authentication.role}"></td></tr>
+            <tr><th>登録日時</th><td th:text="${#temporals.format(employee.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
+            <tr><th>更新日時</th><td th:text="${#temporals.format(employee.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
+        </table>
+    <a href="/employees/update">この従業員情報を編集する</a>
+    <br>
+    <a th:href="@{/employees}">一覧に戻る</a>
     </form>
 </body>
 </html>
