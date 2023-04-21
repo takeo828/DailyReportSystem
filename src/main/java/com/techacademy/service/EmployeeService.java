@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+import com.techacademy.entity.Authentication;
 import com.techacademy.entity.Employee;
 import com.techacademy.repository.EmployeeRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,8 @@ public class EmployeeService {
         employee.setCreatedAt(LocalDateTime.now());
         employee.setUpdatedAt(LocalDateTime.now());
         employee.setDeleteFlag(0);
+        Authentication authentication = employee.getAuthentication();
+        authentication.setEmployee(employee);
         return employeeRepository.save(employee);
     }
 

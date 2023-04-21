@@ -38,7 +38,7 @@ public class EmployeeController {
     @PostMapping("/register")
     public String postRegister(Employee employee) {
         service.saveEmployee(employee);
-        return "redirect:/employees/list";
+        return "redirect:/employees/";
     }
 
     @GetMapping(value = { "/detail", "/detail/{id}/" })
@@ -46,6 +46,19 @@ public class EmployeeController {
         Employee employee = id != null ? service.getEmployee(id) : new Employee();
         model.addAttribute("employee", employee);
         return "/employees/detail";
+    }
+
+    @GetMapping("/update/{id}/")
+    public String getUpdate(@PathVariable(name = "id", required = true) Integer id, Model model) {
+        Employee employee = service.getEmployee(id);
+        model.addAttribute("employee", employee);
+        return "/employees/update";
+    }
+
+    @PostMapping("/update/{id}/")
+    public String postUpdate(Employee employee) {
+        service.saveEmployee(employee);
+        return "redirect:/employees/list";
     }
 
 }

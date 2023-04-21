@@ -19,7 +19,7 @@
             <tr><th>登録日時</th><td th:text="${#temporals.format(employee.createdAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
             <tr><th>更新日時</th><td th:text="${#temporals.format(employee.updatedAt, 'yyyy/MM/dd HH:mm:ss')}"></td></tr>
         </table>
-    <a href="/employees/update">この従業員情報を編集する</a>
+    <a href="@{/employees/update/{id}/(id=${employee.id})}">この従業員情報を編集する</a>
     <br>
     <a th:href="@{/employees}">一覧に戻る</a>
     </form>
