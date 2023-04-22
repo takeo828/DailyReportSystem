@@ -39,4 +39,25 @@ public class EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    @Transactional
+    public Employee deleteEmployee(Employee employee) {
+        employee.setUpdatedAt(LocalDateTime.now());
+        employee.setDeleteFlag(1);
+        return employeeRepository.save(employee);
+    }
+
+    @Transactional
+    public Employee updateEmployee(Integer id, Employee updatedEmployee) {
+        Employee employee = employeeRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid employee id: " + id));
+
+        employee.setName(updatedEmployee.getName());
+        employee.setUpdatedAt(LocalDateTime.now());
+
+        Authentication updatedAuth = updatedEmployee.getAuthentication();
+        Authentication authentication = employee.getAuthentication();
+        authentication.setPassword(updatedAuth.getPassword());
+        authentication.setRole(updatedAuth.getRole());
+
+        return employeeRepository.save(employee);
+    }
 }

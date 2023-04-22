@@ -3,14 +3,41 @@
 <head>
 <meta charset="UTF-8">
     <title>DailyReportSystem</title>
-    <link rel="stylesheet" th:href="@{/css/employees/update.css}">
+    <link rel="stylesheet" th:href="@{/css/employees/register.css}">
 </head>
 <body>
     <div class="title">
     <h1>ID:</h1>
-
+    <h1 th:text="*{employee.id}"></h1>
     <h1>の従業員情報 編集ページ</h1>
     </div>
-
+    <form method="post" th:action="@{/employees/update/{id}(id=${employee.id})}" th:object="${employee}">
+        <p>
+        <label for="code">社員番号</label>
+        <br>
+        <span class="code-text" th:text="*{authentication.code}"></span>
+        </p>
+        <p>
+        <label for="name">氏名</label>
+        <br>
+        <input type="text" th:field="*{name}">
+        </p>
+        <p>
+        <label for="password">パスワード</label>
+        <br>
+        <input type="password" th:field="*{authentication.password}">
+        </p>
+        <p>
+        <label for="role">権限</label>
+        <br>
+        <select th:field="*{authentication.role}">
+            <option th:each="item:${T(com.techacademy.entity.Authentication.Role).values()}" th:value="${item}" th:text="${item}">
+        </select>
+        </p>
+        <input type="submit" value="投稿">
+        <br>
+        <a th:href="@{/employees/delete/{id}(id=${employee.id})}">この従業員情報を削除する</a>
+    </form>
+        <a th:href="@{/employees}">一覧に戻る</a>
 </body>
 </html>
