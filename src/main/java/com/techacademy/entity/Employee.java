@@ -10,7 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.Valid;
+
 import org.hibernate.annotations.Where;
+import org.hibernate.validator.constraints.Length;
+
 import lombok.Data;
 
 @Data
@@ -26,6 +31,8 @@ public class Employee {
 
     /** 名前。20桁 */
     @Column(length = 20, nullable = false)
+    @NotEmpty(message = "{name.notempty}")
+    @Length(max=20, message = "{name.length}")
     private String name;
 
     /** 削除フラグ */
@@ -41,6 +48,7 @@ public class Employee {
     private LocalDateTime updatedAt;
 
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    @Valid
     private Authentication authentication;
 
     }

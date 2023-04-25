@@ -28,4 +28,7 @@ tr:nth-child(odd) {
     margin-bottom: 0;
 }
 
+.err {
+    color: red;
+}
 

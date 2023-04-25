@@ -3,8 +3,11 @@ package com.techacademy.controller;
 import com.techacademy.entity.Employee;
 import com.techacademy.service.EmployeeService;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,19 +39,23 @@ public class EmployeeController {
     }
 
     @PostMapping("/register")
-    public String postRegister(Employee employee) {
+    public String postRegister(@ModelAttribute @Validated Employee employee, BindingResult res, Model model) {
+        if (res.hasErrors()) {
+            return getRegister(employee);
+        }
+
         service.saveEmployee(employee);
         return "redirect:/employees";
     }
 
-    @GetMapping(value = { "/detail", "/detail/{id}/" })
+    @GetMapping(value = { "/detail", "/detail/{id}" })
     public String getEmployee(@PathVariable(name = "id", required = false) Integer id, Model model) {
         Employee employee = id != null ? service.getEmployee(id) : new Employee();
         model.addAttribute("employee", employee);
         return "/employees/detail";
     }
 
-    @GetMapping("/update/{id}/")
+    @GetMapping("/update/{id}")
     public String getUpdate(@PathVariable(name = "id", required = true) Integer id, Model model) {
         Employee employee = service.getEmployee(id);
         model.addAttribute("employee", employee);
@@ -56,8 +63,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/update/{id}")
-    public String postUpdate(@PathVariable(name = "id", required = true) Integer id, Employee employee) {
-        service.updateEmployee(id, employee);
+    public String postUpdate(@PathVariable(name = "id", required = true) Integer id,
+                             @ModelAttribute @Validated Employee updateEmployee,
+                             BindingResult res, Model model) {
+        if (res.hasErrors()) {
+            model.addAttribute("employee", updateEmployee);
+            return "/employees/update";
+        }
+        service.updateEmployee(id, updateEmployee);
         return "redirect:/employees";
     }
 

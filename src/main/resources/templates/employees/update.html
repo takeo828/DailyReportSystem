@@ -20,18 +20,20 @@
         <p>
         <label for="name">氏名</label>
         <br>
-        <input type="text" th:field="*{name}">
+        <input type="text" th:field="*{name}" th:errorclass="err">
+        <span th:errors="*{name}" class="err"></span>
         </p>
         <p>
         <label for="password">パスワード</label>
         <br>
-        <input type="password" th:field="*{authentication.password}">
+        <input type="password" th:field="*{authentication.password}" th:errorclass="err">
+        <span th:errors="*{authentication.password}" class="err"></span>
         </p>
         <p>
         <label for="role">権限</label>
         <br>
         <select th:field="*{authentication.role}">
-            <option th:each="item:${T(com.techacademy.entity.Authentication.Role).values()}" th:value="${item}" th:text="${item}">
+            <option th:each="item:${T(com.techacademy.entity.Authentication.Role).values()}" th:value="${item}" th:text="${item}"></option>
         </select>
         </p>
         <input type="submit" value="投稿">
