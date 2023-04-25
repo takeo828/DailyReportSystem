@@ -16,6 +16,7 @@
         <label for="code">社員番号</label>
         <br>
         <span class="code-text" th:text="*{authentication.code}"></span>
+        <input type="hidden" th:field="*{authentication.code}">
         </p>
         <p>
         <label for="name">氏名</label>
