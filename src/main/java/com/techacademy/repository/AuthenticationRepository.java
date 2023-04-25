@@ -1,9 +1,10 @@
 package com.techacademy.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import com.techacademy.entity.Authentication;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AuthenticationRepository extends JpaRepository<Authentication, Integer>{
-
+@Repository
+public interface AuthenticationRepository extends JpaRepository<Authentication, String> {
+    Authentication findByCode(String code);
 }

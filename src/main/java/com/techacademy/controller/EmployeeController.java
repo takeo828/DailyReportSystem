@@ -9,18 +9,28 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import com.techacademy.validation.EmployeeCodeValidator;
 
 @Controller
 @RequestMapping("employees")
 public class EmployeeController {
     private final EmployeeService service;
+    private final EmployeeCodeValidator employeeCodeValidator;
 
-    public EmployeeController(EmployeeService service) {
+    public EmployeeController(EmployeeService service, EmployeeCodeValidator employeeCodeValidator) {
         this.service = service;
+        this.employeeCodeValidator = employeeCodeValidator;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(employeeCodeValidator);
     }
 
     @GetMapping
@@ -40,6 +50,12 @@ public class EmployeeController {
 
     @PostMapping("/register")
     public String postRegister(@ModelAttribute @Validated Employee employee, BindingResult res, Model model) {
+        if (res.hasErrors()) {
+            return getRegister(employee);
+        }
+
+        // Invoke the custom validator
+        employeeCodeValidator.validate(employee, res);
         if (res.hasErrors()) {
             return getRegister(employee);
         }
