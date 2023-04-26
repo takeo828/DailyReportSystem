@@ -3,10 +3,15 @@ package com.techacademy.controller;
 import com.techacademy.entity.Employee;
 import com.techacademy.service.EmployeeService;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.WebDataBinder;
@@ -54,7 +59,6 @@ public class EmployeeController {
             return getRegister(employee);
         }
 
-        // Invoke the custom validator
         employeeCodeValidator.validate(employee, res);
         if (res.hasErrors()) {
             return getRegister(employee);
@@ -82,12 +86,41 @@ public class EmployeeController {
     public String postUpdate(@PathVariable(name = "id", required = true) Integer id,
                              @ModelAttribute @Validated Employee updateEmployee,
                              BindingResult res, Model model) {
+
+        if (updateEmployee.getAuthentication().getPassword().isEmpty()) {
+            res = removePasswordValidationErrors(res);
+        }
+
         if (res.hasErrors()) {
             model.addAttribute("employee", updateEmployee);
             return "/employees/update";
         }
+
+        Employee originalEmployee = service.getEmployee(id);
+        if (updateEmployee.getAuthentication().getPassword().isEmpty()) {
+            updateEmployee.getAuthentication().setPassword(originalEmployee.getAuthentication().getPassword());
+        }
+
         service.updateEmployee(id, updateEmployee);
         return "redirect:/employees";
+    }
+
+    private BindingResult removePasswordValidationErrors(BindingResult bindingResult) {
+        List<ObjectError> errorList = new ArrayList<>(bindingResult.getAllErrors());
+        errorList.removeIf(e -> e.getCodes()[0].equals("password.notempty") || e.getCodes()[0].equals("password.length"));
+
+        BeanPropertyBindingResult newBindingResult = new BeanPropertyBindingResult(bindingResult.getTarget(), bindingResult.getObjectName());
+        for (ObjectError error : errorList) {
+            if (error instanceof FieldError) {
+                FieldError fieldError = (FieldError) error;
+                if (!fieldError.getField().equals("authentication.password")) {
+                    newBindingResult.addError(fieldError);
+                }
+            } else {
+                newBindingResult.addError(error);
+            }
+        }
+        return newBindingResult;
     }
 
     @GetMapping("/delete/{id}")
