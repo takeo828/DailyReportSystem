@@ -46,4 +46,9 @@ public class Authentication {
     @JoinColumn(name = "employee_id", referencedColumnName="id")
     private Employee employee;
 
+    @Column(name = "login_employee")
+    private String loginEmployee;
+    public String getLoginEmployee() {
+        return loginEmployee;
+    }
 }
