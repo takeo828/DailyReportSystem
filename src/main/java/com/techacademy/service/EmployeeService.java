@@ -2,6 +2,8 @@ package com.techacademy.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.techacademy.entity.Authentication;
@@ -12,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public EmployeeService(EmployeeRepository repository) {
+    public EmployeeService(EmployeeRepository repository, PasswordEncoder passwordEncoder) {
         this.employeeRepository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Employee> getEmployeeList(){
@@ -35,6 +39,7 @@ public class EmployeeService {
         employee.setUpdatedAt(LocalDateTime.now());
         employee.setDeleteFlag(0);
         Authentication authentication = employee.getAuthentication();
+        authentication.setPassword(passwordEncoder.encode(authentication.getPassword()));
         authentication.setEmployee(employee);
         return employeeRepository.save(employee);
     }
