@@ -48,7 +48,5 @@ public class Authentication {
 
     @Column(name = "login_employee")
     private String loginEmployee;
-    public String getLoginEmployee() {
-        return loginEmployee;
-    }
+
 }
