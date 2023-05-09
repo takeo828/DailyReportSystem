@@ -1,6 +1,7 @@
 package com.techacademy.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -8,15 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PreRemove;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.Valid;
 
 import org.hibernate.annotations.Where;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Data;
 
@@ -53,13 +53,15 @@ public class Employee {
     @Valid
     private Authentication authentication;
 
-    @PreRemove
-    @Transactional
-    private void preRemove() {
-        // 認証エンティティからemployeeを切り離す
-        if (authentication!=null) {
-            authentication.setEmployee(null);
-        }
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Report> reports;
+
+    public List<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<Report> reports) {
+        this.reports = reports;
     }
 
     }

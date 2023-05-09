@@ -60,10 +60,15 @@ public class EmployeeService {
 
         Authentication updatedAuth = updatedEmployee.getAuthentication();
         Authentication authentication = employee.getAuthentication();
-        authentication.setPassword(updatedAuth.getPassword());
+
+        // パスワードをエンコードしてから更新
+        String encodedPassword = passwordEncoder.encode(updatedAuth.getPassword());
+        authentication.setPassword(encodedPassword);
+
         authentication.setRole(updatedAuth.getRole());
 
         return employeeRepository.save(employee);
     }
+
 
 }

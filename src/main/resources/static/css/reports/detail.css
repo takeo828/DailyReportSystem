@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+pre {
+    font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -7,29 +11,6 @@ table {
 th, td {
     border: solid 1px black;
     padding: 10px 20px;
-}
-
-tr:nth-child(even) {
-    background: #eee;
-}
-
-tr:nth-child(odd) {
-    background: #fff;
-}
-
-.title {
-    display: flex;
-    align-items: center;
-}
-
-
-.code-text {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.err {
-    color: red;
 }
 
 .title {

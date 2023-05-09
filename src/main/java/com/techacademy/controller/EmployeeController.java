@@ -96,12 +96,12 @@ public class EmployeeController {
             return "/employees/update";
         }
 
-        Employee employee = service.getEmployee(id);
+        Employee originalEmployee = service.getEmployee(id);
         if (updateEmployee.getAuthentication().getPassword().isEmpty()) {
-            updateEmployee.getAuthentication().setPassword(employee.getAuthentication().getPassword());
+            updateEmployee.getAuthentication().setPassword(originalEmployee.getAuthentication().getPassword());
         }
 
-        service.updateEmployee(id, employee);
+        service.updateEmployee(id, updateEmployee);
         return "redirect:/employees";
     }
 

@@ -16,3 +16,52 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
     background: #fff;
 }
+
+.title {
+    display: flex;
+    align-items: center;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+}
+
+.header-container h1 {
+    color: #ffffff;
+    margin: 0;
+}
+
+.header-container nav {
+    display: flex;
+    gap: 10px;
+}
+
+.header-container nav a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.header-container nav a:hover {
+    text-decoration: underline;
+}
+
+.logout-button {
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.logout-button:hover {
+    text-decoration: underline;
+}
+
+nav a:not(:last-child) {
+    margin-right: 0.5em;
+}
