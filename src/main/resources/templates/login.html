@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
     <title>Tutorial of Develop</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
-    <h1>日報管理システム</h1>
-    <h2>ログイン</h2>
+    <div th:replace="fragments/header :: loginHeaderFragment"></div>
+    <h1>ログイン</h1>
     <p class="err" th:if="${param.error}">ユーザ名かパスワードが一致しませんでした。</p>
     <form method="post" action="/login" th:action="@{/login}">
     <table>

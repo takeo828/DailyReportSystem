@@ -9,11 +9,17 @@
             <nav>
                 <a href="/employees">従業員管理</a>
                 <a href="/reports">日報管理</a>
-                <a th:href="@{/myreports}" th:text="${#authentication.principal.employee.name + 'さん'}"></a>
+                <a th:href="@{/reports/myreports}" th:text="${#authentication.principal.employee.name + 'さん'}"></a>
                 <form th:action="@{/logout}" method="post">
                     <input class="logout-button" type="submit" value="ログアウト">
                 </form>
             </nav>
+        </div>
+    </header>
+
+    <header th:fragment="loginHeaderFragment">
+        <div class="header-container">
+            <h1 class="title">日報管理システム</h1>
         </div>
     </header>
 </body>
