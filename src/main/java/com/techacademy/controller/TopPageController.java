@@ -23,7 +23,7 @@ public class TopPageController {
         Employee loginEmployee = user.getEmployee();
         model.addAttribute("reports", reportService.getMyReports(loginEmployee));
         model.addAttribute("totalReports", reportService.getMyReports(loginEmployee).size());
-        return "/reports/myreports";
+        return "reports/myreports";
     }
 
 }
