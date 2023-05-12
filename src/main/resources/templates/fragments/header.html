@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 </head>
 <body>
@@ -7,9 +7,9 @@
         <div class="header-container">
             <h1 class="title">日報管理システム</h1>
             <nav>
-                <a href="/employees">従業員管理</a>
+                <a href="/employees" sec:authorize="hasRole('ROLE_管理者')">従業員管理</a>
                 <a href="/reports">日報管理</a>
-                <a th:href="@{/reports/myreports}" th:text="${#authentication.principal.employee.name + 'さん'}"></a>
+                <a th:href="@{/reports/myreports}" th:text="${#authentication.principal.getEmployee().name + 'さん'}"></a>
                 <form th:action="@{/logout}" method="post">
                     <input class="logout-button" type="submit" value="ログアウト">
                 </form>

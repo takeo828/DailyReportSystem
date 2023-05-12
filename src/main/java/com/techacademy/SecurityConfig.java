@@ -24,7 +24,7 @@ public class SecurityConfig {
         ).authorizeHttpRequests(auth -> auth
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                 .permitAll()                 // css等は未ログインでアクセス可
-            .mvcMatchers("/employees/**").hasAuthority("管理者") // 追記部分：従業員管理は管理者のみアクセス可
+            .mvcMatchers("/employees/**").hasAuthority("ROLE_管理者") // 追記部分：従業員管理は管理者のみアクセス可
             .anyRequest().authenticated()    // その他はログイン必要
         );
 
