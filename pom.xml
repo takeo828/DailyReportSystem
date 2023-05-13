@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.techacademy</groupId>
     <artifactId>DailyReportSystem</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>DailyReportSystem</name>
     <description>the project of Daily Report System</description>
     <properties>
